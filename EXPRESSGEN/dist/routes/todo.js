@@ -4,9 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const userController_1 = require("../controller/userController");
+const todoController_1 = require("../controller/todoController");
+const auth_1 = require("../middleware/auth");
 const router = express_1.default.Router();
-/* GET users listing. */
-router.post('/register', userController_1.Register);
-router.post('/login', userController_1.Login);
+/* GET home page. */
+router.post('/create', auth_1.auth, todoController_1.createTodo);
+router.get('/get-todo', auth_1.auth, todoController_1.getTodo);
 exports.default = router;

@@ -3,6 +3,7 @@
 /**
  * Module dependencies.
  */
+require('dotenv').config();
 
 const app = require('../dist/app').default;
 const debug = require('debug')('expressgen:server');

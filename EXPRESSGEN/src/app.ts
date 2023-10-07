@@ -6,14 +6,16 @@ import logger from 'morgan';
 import db from './config/database.config';
 
 
-import indexRouter from './routes/index';
+import homepage from './routes/page';
+import todoRouter from './routes/todo';
 import usersRouter from './routes/users';
+import { Login, Register } from './controller/userController';
 
 const app = express();
 
 
 // Database Connection
-db.sync({force: true}).then(() => {
+db.sync().then(() => {
   console.log('Database Connected Successfully');
 }).catch((err:Error) => { 
   console.log(err); 
@@ -30,8 +32,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+app.use('/todos', todoRouter);
 app.use('/users', usersRouter);
+app.use('/', homepage);
+app.use('/login', Login);
+app.use('/register', Register);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,11 +1,12 @@
 import { DataTypes, Model } from 'sequelize';
 import db  from '../config/database.config';
+import { TodoInstance } from './todoModel';
 
 
 
 
 export interface UserAttributes {
-    id: number;
+    id: String;
     firstName: string;
     email: string;
     password: string;
@@ -16,10 +17,9 @@ export class UserInstance extends Model<UserAttributes> {}
 
     UserInstance.init({
         id: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUIDV4,
             primaryKey: true,
-            autoIncrement: true,
-            allowNull: false,
+            allowNull: false
         },
 
         firstName: {
@@ -37,4 +37,7 @@ export class UserInstance extends Model<UserAttributes> {}
         },
     },
     {sequelize: db, tableName: 'user'}
-    )
+    );
+
+   UserInstance.hasMany (TodoInstance, {foreignKey: 'userId', as: 'todo'});
+   TodoInstance.belongsTo (UserInstance, {foreignKey: 'userId', as: 'user'});

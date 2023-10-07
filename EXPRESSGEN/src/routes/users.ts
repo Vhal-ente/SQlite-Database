@@ -1,9 +1,8 @@
 import express, {Request, Response, NextFunction}  from 'express';
+import { Login, Register } from '../controller/userController';
 const router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req:Request, res:Response, next:NextFunction) {
-  res.send('respond with a resource');
-});
-
+router.post('/register', Register);
+router.post('/login', Login);
 export default router;
